@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Jost, Geist_Mono } from "next/font/google";
+import Provider from "../components/provider";
 import "./globals.css";
 
 const fontJost = Jost({
@@ -23,11 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${fontJost.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Provider  >
+          {children}
+        </Provider>
       </body>
     </html>
   );

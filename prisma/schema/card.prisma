@@ -1,0 +1,261 @@
+model CardDetails {
+    id Int @id @default(autoincrement())
+
+    card   Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+    cardId Int  @unique
+
+    categories                Category[]               @relation("CardDetailsToCategory")
+    potential                 Potential?               @relation("CardDetailsToPotential", fields: [potentialId], references: [id])
+    potentialId               Int?                     @unique
+    specials                  Special[]                @relation("CardDetailsToSpecial")
+    awakening_routes          AwakeningRoute[]         @relation("CardDetailsToAwakeningRoute")
+    transformations           Transformation[]         @relation("CardDetailsToTransformation")
+    optimal_awakening_growths OptimalAwakeningGrowth[] @relation("CardDetailsToOptimalAwakeningGrowth")
+    card_links                CardLink[]               @relation("CardDetailsToCardLink")
+    partners                  Partner[]                @relation("CardDetailsToPartner")
+    sa_level_cards            SaLevelCard[]            @relation("CardDetailsToSaLevelCard") // Only ONCE!
+}
+
+model Card {
+    id                          Int     @id @default(autoincrement())
+    name                        String
+    character_id                Int
+    character_size              Int
+    cost                        Int
+    rarity                      Int
+    hp_init                     Int
+    hp_max                      Int
+    atk_init                    Int
+    atk_max                     Int
+    def_init                    Int
+    def_max                     Int
+    element                     Int
+    special_motion              Int
+    passive_skill_set_id        Int
+    potential_board_id          Int
+    leader_skill_set_id         Int
+    eball_mod_min               Float
+    eball_mod_num100            Float
+    eball_mod_mid               Float
+    eball_mod_mid_num           Float
+    eball_mod_max               Float
+    eball_mod_max_num           Float
+    bg_effect_id                Int
+    open_at                     String
+    title                       String?
+    leader_skill                String?
+    passive_skill_name          String?
+    passive_skill_desc          String?
+    skill_level_max             Int
+    optimal_awakening_grow_type Int
+    is_f2p                      Boolean
+    unique_info_id              Int?
+    is_dokkan_fes               Boolean
+    is_carnival_only            Boolean
+    passive_skill_itemized_desc String?
+
+    card_details CardDetails?
+
+    categories                Category[]               @relation("CardToCategory")
+    potential                 Potential?               @relation("CardToPotential", fields: [potentialId], references: [id])
+    specials                  Special[]                @relation("CardToSpecial")
+    awakening_routes          AwakeningRoute[]         @relation("CardToAwakeningRoute")
+    transformations           Transformation[]         @relation("CardToTransformation")
+    optimal_awakening_growths OptimalAwakeningGrowth[] @relation("CardToOptimalAwakeningGrowth")
+    card_links                CardLink[]               @relation("CardToCardLink")
+    partners                  Partner[]                @relation("CardToPartner")
+    sa_level_cards            SaLevelCard[]            @relation("CardToSaLevelCard")
+
+    potentialId Int? @unique
+}
+
+model Category {
+    id       Int    @id @default(autoincrement())
+    name     String
+    priority Int
+    open_at  String
+
+    card_details CardDetails[] @relation("CardDetailsToCategory")
+    cards        Card[]        @relation("CardToCategory")
+}
+
+model Potential {
+    id  Int @id @default(autoincrement())
+    atk Int
+    def Int
+    hp  Int
+
+    card_details CardDetails? @relation("CardDetailsToPotential")
+    card         Card?        @relation("CardToPotential")
+}
+
+model Special {
+    id                        Int      @id @default(autoincrement())
+    name                      String
+    description               String?
+    aim_target                Int
+    increase_rate             Float?
+    lv_bonus                  Float?
+    style                     String?
+    lv_start                  Int?
+    eball_num_start           Int?
+    card_costume_condition_id Int?
+    special_category_id       Int?
+    special_category_name     String?
+    special_view_id           Int?
+    special_view_id_has_ko    Boolean?
+    special_bonus_1           String?
+    bonus_view_id_1           Int?
+    bonus_view_id_2           Int?
+    bonus_view_id_1_has_ko    Boolean?
+    bonus_view_id_2_has_ko    Boolean?
+    special_bonus_1_lv        Float?
+    special_bonus_2_lv        Float?
+
+    card_details  CardDetails @relation("CardDetailsToSpecial", fields: [cardDetailsId], references: [id])
+    card          Card        @relation("CardToSpecial", fields: [cardId], references: [id])
+    cardId        Int
+    cardDetailsId Int
+}
+
+model AwakeningRoute {
+    id             Int        @id @default(autoincrement())
+    awaked_card_id Int
+    awaked_card    AwakedCard @relation(fields: [awaked_card_id], references: [id])
+    card_id        Int?
+
+    card_details  CardDetails @relation("CardDetailsToAwakeningRoute", fields: [cardDetailsId], references: [id])
+    card          Card?       @relation("CardToAwakeningRoute", fields: [cardId], references: [id])
+    cardDetailsId Int
+    cardId        Int?
+}
+
+model AwakedCard {
+    id           Int          @id @default(autoincrement())
+    name         String
+    title        String?
+    element      Int
+    rarity       Int
+    open_at      String
+    base_id      Int
+    awaken_cost  Int
+    type         String?
+    awaken_items AwakenItem[]
+
+    awakening_routes AwakeningRoute[]
+}
+
+model AwakenItem {
+    id                       Int                     @id @default(autoincrement())
+    item_id                  Int
+    quantity                 Int
+    rarity                   Int
+    name                     String
+    description              String?
+    zeni                     Int
+    awaked_card              AwakedCard              @relation(fields: [awaked_cardId], references: [id])
+    awaked_cardId            Int
+    OptimalAwakeningGrowth   OptimalAwakeningGrowth? @relation(fields: [optimalAwakeningGrowthId], references: [id])
+    optimalAwakeningGrowthId Int?
+}
+
+model Transformation {
+    id           Int      @id @default(autoincrement())
+    next_card_id Int
+    next_card    NextCard @relation(fields: [next_card_id], references: [id])
+    card         Card     @relation("CardToTransformation", fields: [cardId], references: [id])
+    cardId       Int
+
+    card_details             CardDetails             @relation("CardDetailsToTransformation", fields: [cardDetailsId], references: [id])
+    cardDetailsId            Int
+    OptimalAwakeningGrowth   OptimalAwakeningGrowth? @relation(fields: [optimalAwakeningGrowthId], references: [id])
+    optimalAwakeningGrowthId Int?
+}
+
+model NextCard {
+    id      Int    @id @default(autoincrement())
+    name    String
+    rarity  Int
+    element Int
+    open_at String
+    base_id Int
+
+    transformations Transformation[]
+}
+
+model OptimalAwakeningGrowth {
+    id                          Int              @id @default(autoincrement())
+    step                        Int
+    lv_max                      Int
+    skill_lv_max                Int
+    passive_skill_id            Int?
+    passive_skill_name          String?
+    passive_skill_description   String?
+    leader_skill_id             Int?
+    leader_skill_name           String?
+    leader_skill_description    String?
+    hp_max                      Int
+    atk_max                     Int
+    def_max                     Int
+    awaken_items                AwakenItem[]
+    awaken_cost                 Int
+    open_at                     String
+    transformations             Transformation[]
+    passive_skill_itemized_desc String?
+
+    card_details  CardDetails @relation("CardDetailsToOptimalAwakeningGrowth", fields: [cardDetailsId], references: [id])
+    card          Card        @relation("CardToOptimalAwakeningGrowth", fields: [cardId], references: [id])
+    cardId        Int
+    cardDetailsId Int
+}
+
+model CardLink {
+    id                  Int     @id @default(autoincrement())
+    idx                 Int
+    link_skill_id       Int
+    name                String
+    level1_description  String?
+    level10_description String?
+
+    card_details  CardDetails @relation("CardDetailsToCardLink", fields: [cardDetailsId], references: [id])
+    card          Card        @relation("CardToCardLink", fields: [cardId], references: [id])
+    cardId        Int
+    cardDetailsId Int
+}
+
+model Partner {
+    id                    Int      @id @default(autoincrement())
+    name                  String
+    title                 String?
+    rarity                Int
+    element               Int
+    base_id               Int
+    common_link_count     Int?
+    common_links          Int[]
+    common_categories     Int[]
+    is_same_element       Boolean?
+    is_same_base_element  Boolean?
+    is_same_element_group Boolean?
+    common_team_count     Int?
+    has_eza               Boolean?
+    has_sticker           Boolean?
+    has_super_eza         Boolean?
+
+    card_details CardDetails[] @relation("CardDetailsToPartner")
+    cards        Card[]        @relation("CardToPartner")
+}
+
+model SaLevelCard {
+    id              Int      @id @default(autoincrement())
+    name            String
+    title           String?
+    rarity          Int
+    element         Int
+    base_id         Int
+    has_eza         Boolean?
+    is_f2p          Boolean?
+    level_up_chance Float?
+
+    cards        Card[]        @relation("CardToSaLevelCard")
+    card_details CardDetails[] @relation("CardDetailsToSaLevelCard")
+}
