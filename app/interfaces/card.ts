@@ -20,7 +20,7 @@ export interface Card {
     character_id: number
     character_size: number
     cost: number
-    rarity: number
+    rarity: 1 | 2 | 3 | 4 | 5
     hp_init: number
     hp_max: number
     atk_init: number

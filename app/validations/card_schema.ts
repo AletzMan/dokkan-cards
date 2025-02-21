@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const AwakenItemSchema = z.object({
+export const AwakenItemSchema = z.object({
     item_id: z.number(),
     quantity: z.number(),
     rarity: z.number(),
@@ -9,7 +9,7 @@ const AwakenItemSchema = z.object({
     zeni: z.number(),
 });
 
-const AwakedCardSchema = z.object({
+export const AwakedCardSchema = z.object({
     id: z.number(),
     name: z.string(),
     title: z.string().nullable(),
@@ -22,7 +22,7 @@ const AwakedCardSchema = z.object({
     type: z.string().nullable(),
 });
 
-const NextCardSchema = z.object({
+export const NextCardSchema = z.object({
     id: z.number(),
     name: z.string(),
     rarity: z.number(),
@@ -31,13 +31,13 @@ const NextCardSchema = z.object({
     base_id: z.number(),
 });
 
-const TransformationSchema = z.object({
+export const TransformationSchema = z.object({
     id: z.number(),
     next_card_id: z.number(),
     next_card: NextCardSchema,
 });
 
-const OptimalAwakeningGrowthSchema = z.object({
+export const OptimalAwakeningGrowthSchema = z.object({
     step: z.number(),
     lv_max: z.number(),
     skill_lv_max: z.number(),
@@ -57,7 +57,7 @@ const OptimalAwakeningGrowthSchema = z.object({
     passive_skill_itemized_desc: z.string().nullable(),
 });
 
-const CardLinkSchema = z.object({
+export const CardLinkSchema = z.object({
     id: z.number(),
     idx: z.number(),
     link_skill_id: z.number(),
@@ -66,7 +66,7 @@ const CardLinkSchema = z.object({
     level10_description: z.string().nullable(),
 });
 
-const PartnerSchema = z.object({
+export const PartnerSchema = z.object({
     id: z.number(),
     name: z.string(),
     title: z.string().nullable(),
@@ -85,7 +85,7 @@ const PartnerSchema = z.object({
     has_super_eza: z.boolean().nullable(),
 });
 
-const SaLevelCardSchema = z.object({
+export const SaLevelCardSchema = z.object({
     id: z.number(),
     name: z.string(),
     title: z.string().nullable(),
@@ -97,7 +97,7 @@ const SaLevelCardSchema = z.object({
     level_up_chance: z.number().nullable(),
 });
 
-const SpecialSchema = z.object({
+export const SpecialSchema = z.object({
     id: z.number(),
     name: z.string(),
     description: z.string().nullable(),
@@ -121,21 +121,21 @@ const SpecialSchema = z.object({
     special_bonus_2_lv: z.number().nullable(),
 });
 
-const PotentialSchema = z.object({
+export const PotentialSchema = z.object({
     id: z.number(),
     atk: z.number(),
     def: z.number(),
     hp: z.number(),
 });
 
-const CategorySchema = z.object({
+export const CategorySchema = z.object({
     id: z.number(),
     name: z.string(),
     priority: z.number(),
     open_at: z.string(),
 });
 
-const CardSchema = z.object({
+export const CardSchema = z.object({
     id: z.number(),
     name: z.string(),
     character_id: z.number(),
@@ -175,28 +175,25 @@ const CardSchema = z.object({
 });
 
 
-const AwakeningRouteSchema = z.object({
+export const AwakeningRouteSchema = z.object({
     id: z.number(),
     awaked_card_id: z.number(),
     awaked_card: AwakedCardSchema,
     card_id: z.number().nullable(),
 });
 
-const CardDetailsSchema = z.object({
+export const CardDetailsSchema = z.object({
     card: CardSchema,
-    categories: z.array(CategorySchema),
-    potential: z.array(PotentialSchema),
-    specials: z.array(SpecialSchema),
-    awakening_routes: z.array(AwakeningRouteSchema),
-    transformations: z.array(TransformationSchema),
-    costumes: z.array(z.unknown()), // Mantén unknown para costumes
-    optimal_awakening_growths: z.array(OptimalAwakeningGrowthSchema),
-    card_links: z.array(CardLinkSchema),
-    partners: z.array(PartnerSchema),
-    sa_level_cards: z.array(SaLevelCardSchema),
-    finish_skills: z.array(z.unknown()), // Mantén unknown para finish_skills
-    standby_skills: z.array(z.unknown()), // Mantén unknown para standby_skills
+    categoryIds: z.array(z.number().int()).optional(), // Array de IDs de categorías (muchos a muchos)
+    potentialId: z.number().int().optional(), // ID de potential (uno a uno)
+    specialIds: z.array(z.number().int()).optional(),
+    awakeningRouteIds: z.array(z.number().int()).optional(),
+    transformationIds: z.array(z.number().int()).optional(),
+    optimalAwakeningGrowthIds: z.array(z.number().int()).optional(),
+    cardLinkIds: z.array(z.number().int()).optional(),
+    partnerIds: z.array(z.number().int()).optional(),
+    saLevelCardIds: z.array(z.number().int()).optional(),
+    // ... (costumes, finish_skills, standby_skills - usa z.unknown() si no tienes un esquema definido)
 });
 
 
-export default CardDetailsSchema;

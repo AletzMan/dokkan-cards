@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
-import CardDetailsSchema from "@/app/validations/card_schema";
+import { CardDetailsSchema } from "@/app/validations/card_schema";
 import { prisma } from "@/app/utils/db";
 
 export async function GET(request: NextRequest, response: NextResponse) {
-    const data = await prisma?.card.findMany(); // Obtén todos los registros de la tabla card
+    const data = await prisma?.category.findMany(); // Obtén todos los registros de la tabla card
     return NextResponse.json({ data }, { status: 200 });
 }
 
@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
         const cardDetails = await prisma.cardDetails.create({
             data: {
                 card: { create: validatedData.card },
-                categories: { create: validatedData.categories }
             }
 
         });
