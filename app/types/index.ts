@@ -9,3 +9,12 @@ export interface ICharacterCard {
     type: string;
     ezaType: string | null;
 };
+
+export interface IBannerData {
+    id: number,
+    image: string,
+    title: string,
+    description: string,
+    startDate: string,
+    endDate: string,
+}
