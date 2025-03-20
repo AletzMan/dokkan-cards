@@ -16,7 +16,7 @@ export default function Header() {
 
             <Drawer.Root size="sm" >
                 <Drawer.Trigger asChild>
-                    <IconButton className="border border-[--orange-color]" size="sm" variant="outline">
+                    <IconButton className="border border-[--orange-color] hover:bg-[--orange-opacity-color]" size="sm" variant="outline">
                         <Image style={{ filter: "invert(1)" }} src="/menu_icon.webp" width={35} height={35} alt="Logo de dragon ball japones" />
                     </IconButton>
                 </Drawer.Trigger>
@@ -27,7 +27,7 @@ export default function Header() {
                             <Drawer.Header className="flex justify-between items-center">
                                 <Drawer.Title>Menu</Drawer.Title>
                                 <Drawer.CloseTrigger asChild>
-                                    <CloseButton size="sm" />
+                                    <CloseButton size="sm" className="hover:bg-[--orange-border-color]" />
                                 </Drawer.CloseTrigger>
                             </Drawer.Header>
                             <Drawer.Body>
