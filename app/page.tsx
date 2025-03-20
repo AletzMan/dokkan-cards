@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ICharacterCard } from "./types";
 import { CardCharacter } from "./components/CardCharacter/CardCharacter";
 import { FiClock } from "react-icons/fi";
+import Image from "next/image";
 
 
 const dataDefault: ICharacterCard[] = [
@@ -305,9 +306,13 @@ export default function Home() {
   }
 
   return (
-    <section className="flex flex-col bg-[linear-gradient(-45deg,var(--chakra-colors-bg-emphasized),var(--chakra-colors-bg))] items-center justify-items-center pb-4 gap-16 font-[family-name:var(--font-jost)] h-svh">
-      <Header />
-      <Button onClick={getData} loading={loalding}>Scrapear</Button>
+    <section className="flex flex-col bg-[linear-gradient(-45deg,var(--chakra-colors-bg-subtle),var(--chakra-colors-bg-subtle))] items-center justify-items-center pb-4 pt-20 gap-8 font-[family-name:var(--font-jost)] h-svh">
+      <div className="relative">
+        <Image src="/background.webp" width={500} height={400} alt="Fondo dragon ball personajes" />
+        <div className="absolute inset-0 bg-[linear-gradient(0,var(--chakra-colors-bg-subtle),transparent)]"></div>
+        <Image className="absolute -bottom-[10%] left-[25%] w-[50%]" src="/logo_dokkan.webp" width={300} height={200} alt="Fondo dragon ball personajes" />
+      </div>
+      {/*<Button onClick={getData} loading={loalding}>Scrapear</Button>*/}
       <div className="border border-cyan-900  rounded-md">
         <h2 className="flex items-center justify-start gap-4 py-2 pl-4 w-full text-center font-bold text-2xl border-b-[1px] border-b-[--header-border-color] bg-[linear-gradient(to_right,var(--header-color),var(--header-opacity-color))]"><FiClock />Cartas Recientes</h2>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
