@@ -2,10 +2,11 @@
 import Header from "@components/Header";
 import { Button } from "@chakra-ui/react";
 import { useState } from "react";
-import { ICharacterCard } from "./types";
+import { IBannerData, ICharacterCard } from "./types";
 import { CardCharacter } from "./components/CardCharacter/CardCharacter";
 import { FiClock } from "react-icons/fi";
 import Image from "next/image";
+import { URL_API } from "./constants";
 
 
 const dataDefault: ICharacterCard[] = [
@@ -286,15 +287,67 @@ const dataDefault: ICharacterCard[] = [
   }
 ]
 
+const bannersDefault: IBannerData[] = [
+  {
+    "id": "11494",
+    "image": "/assets/global/es/ingame/banners/gasha_top_banner_11494.png",
+    "title": "Festival DOKKAN [Goku (niño)]",
+    "description": "¡Solo 318 horas! ¡Realiza 3 Invocaciones Múltiples para obtener una gratuita! ¡El nuevo Goku (niño) SSR hace acto de presencia!",
+    "startDate": "¡Solo 318 horas! ¡Realiza 3 Invocaciones Múltiples para obtener una gratuita! ¡El nuevo Goku (niño) SSR hace acto de presencia!",
+    "endDate": "Comienza en: 18/3/2025\n                               12:18:00 a.m.\n                               hora estándar central El termina en: 31/3/2025\n                               6:17:59 a.m.\n                               hora estándar central"
+  },
+  {
+    "id": "11500",
+    "image": "/assets/global/es/ingame/banners/gasha_top_banner_11500.png",
+    "title": "Festival DOKKAN: Invocación de Ticket [Goku (niño)]",
+    "description": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Goku (niño) SSR hace acto de presencia! ¡Un personaje SSR garantizado por Invocación Múltiple!",
+    "startDate": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Goku (niño) SSR hace acto de presencia! ¡Un personaje SSR garantizado por Invocación Múltiple!",
+    "endDate": "Comienza en: 18/3/2025\n                               12:18:00 a.m.\n                               hora estándar central El termina en: 10/4/2025\n                               1:59:59 a.m.\n                               hora estándar central"
+  },
+  {
+    "id": "11502",
+    "image": "/assets/global/es/ingame/banners/gasha_top_banner_11128.png",
+    "title": "Invocación Ritual misterioso",
+    "description": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
+    "startDate": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
+    "endDate": "Comienza en: 17/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 31/3/2025\n                               10:59:59 p.m.\n                               hora estándar central"
+  },
+  {
+    "id": "11460",
+    "image": "/assets/global/es/ingame/banners/gasha_top_banner_11460.png",
+    "title": "Festival DOKKAN [Vegeta Super Saiyajin 3 (Mini) (DAIMA)]",
+    "description": "¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) SSR hace acto de presencia en el Festival DOKKAN! ¡No te pierdas su animación de aparición tras realizar el Despertar Dokkan!",
+    "startDate": "¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) SSR hace acto de presencia en el Festival DOKKAN! ¡No te pierdas su animación de aparición tras realizar el Despertar Dokkan!",
+    "endDate": "Comienza en: 3/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 18/3/2025\n                               1:59:59 a.m.\n                               hora estándar central"
+  },
+  {
+    "id": "11490",
+    "image": "/assets/global/es/ingame/banners/gasha_top_banner_11490.png",
+    "title": "Festival DOKKAN: Invocación de Ticket [Vegeta Super Saiyajin 3 (Mini) (DAIMA)]",
+    "description": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) está aquí! ¡Dos Monedas del Festival Dokkan (limitada) 4 por Invocación Múltiple!",
+    "startDate": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) está aquí! ¡Dos Monedas del Festival Dokkan (limitada) 4 por Invocación Múltiple!",
+    "endDate": "Comienza en: 3/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 25/3/2025\n                               1:59:59 a.m.\n                               hora estándar central"
+  },
+  {
+    "id": "11492",
+    "image": "/assets/global/es/ingame/banners/gasha_top_banner_11128.png",
+    "title": "Invocación Ritual misterioso",
+    "description": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
+    "startDate": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
+    "endDate": "Comienza en: 3/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 17/3/2025\n                               10:59:59 p.m.\n                               hora estándar central"
+  }
+]
+
 
 export default function Home() {
   const [loalding, setLoading] = useState(false);
   const [cards, setCards] = useState<ICharacterCard[]>(dataDefault);
+  const [banners, setBanners] = useState<IBannerData[]>(bannersDefault);
 
   const getData = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/cards");
+      const response = await fetch("/api/cards/recents");
       const data = await response.json();
       console.log(data);
       setCards(data.data);
@@ -317,6 +370,18 @@ export default function Home() {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
           {cards.map(card => (
             <CardCharacter key={card.character} card={{ ...card, hasDate: false }} />
+          ))}
+        </div>
+      </div>
+      <div className="border border-[--blue-border-color] rounded-md">
+        <h2 className="flex items-center justify-start gap-4 py-2 pl-4 w-full text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] bg-[linear-gradient(to_right,var(--blue-color),var(--blue-opacity-color))]"><FiClock />Banners Recientes</h2>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
+          {banners.map(banner => (
+            <a key={banner.id} href={`/banner/${banner.id}`} className="flex flex-col items-center justify-start gap-4 p-2 border border-[--orange-border-color] rounded-md">
+              <Image src={URL_API.concat(banner.image)} width={340} height={259} alt="Fondo de banner de dokkan" />
+              <h3 className="text-base font-semibold text-balance text-center bg-[--orange-opacity-color] px-2 py-1 w-full rounded-sm">{banner.title}</h3>
+              <p className="text-sm bg-[--blue-opacity-color] p-2">{banner.description}</p>
+            </a>
           ))}
         </div>
       </div>
