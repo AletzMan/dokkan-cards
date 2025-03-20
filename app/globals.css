@@ -20,8 +20,8 @@
   --phy-border-color: #e5a526;
   --int-border-color: #84048a;
   --agl-border-color: #1e3ebd;
-  --header-color: #1C4FA1bb;
-  --header-opacity-color: #1C4FA155;
+  --blue-color: #1C4FA1bb;
+  --blue-opacity-color: #1C4FA155;
   --header-border-color: #2963bf;
   --orange-color: #F77908;
   --orange-border-color: #954703;
@@ -47,7 +47,7 @@
 body {
   color: var(--foreground);
   font-family: var(--font-jost);
-  background: radial-gradient(ellipse at top, var(--header-color), transparent),
+  background: radial-gradient(ellipse at top, var(--blue-color), transparent),
     radial-gradient(ellipse at bottom, var(--orange-background-color), transparent);
 }
 
@@ -74,7 +74,7 @@ body {
 .scrollbarXY::-webkit-scrollbar {
   width: 0.4em;
   height: 0.4em;
-  background-color: var(--header-color);
+  background-color: var(--blue-color);
 }
 
 .scrollbar::-webkit-scrollbar-thumb,

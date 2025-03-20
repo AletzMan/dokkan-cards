@@ -6,7 +6,7 @@ import Image from "next/image"
 
 export default function Header() {
     return (
-        <header className="fixed top-0 z-10 flex justify-between bg-[linear-gradient(45deg,var(--header-opacity-color),var(--header-color))] items-center w-full px-4 py-2  border-b-[1px] border-b-[--orange-border-color] overflow-hidden">
+        <header className="fixed top-0 z-10 flex justify-between bg-[linear-gradient(45deg,var(--header-opacity-color),var(--blue-color))] items-center w-full px-4 py-2  border-b-[1px] border-b-[--orange-border-color] overflow-hidden">
             <h1 className="text-xl text-[--chakra-colors-bg-inverted] font-bold pl-14">
                 DOKKAN BATTLE
             </h1>
