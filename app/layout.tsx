@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Jost, Geist_Mono } from "next/font/google";
 import Provider from "@components/provider";
 import "./globals.css";
+import Header from "./components/Header";
 
 const fontJost = Jost({
   variable: "--font-jost",
@@ -29,6 +30,7 @@ export default function RootLayout({
         className={`${fontJost.variable} ${geistMono.variable} antialiased`}
       >
         <Provider  >
+          <Header />
           {children}
         </Provider>
       </body>
