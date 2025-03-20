@@ -20,12 +20,13 @@
   --phy-border-color: #e5a526;
   --int-border-color: #84048a;
   --agl-border-color: #1e3ebd;
-  --blue-color: #1C4FA1bb;
+  --blue-color: #1C4FA1;
+  --blue-background-color: #081934;
   --blue-opacity-color: #1C4FA155;
-  --header-border-color: #2963bf;
+  --blue-border-color: #2963bf;
   --orange-color: #F77908;
-  --orange-border-color: #954703;
-  --orange-background-color: #6a3303;
+  --orange-border-color: #633c1a;
+  --orange-background-color: #3e2611;
   --orange-opacity-color: #F7790830;
 }
 
@@ -47,8 +48,9 @@
 body {
   color: var(--foreground);
   font-family: var(--font-jost);
-  background: radial-gradient(ellipse at top, var(--blue-color), transparent),
-    radial-gradient(ellipse at bottom, var(--orange-background-color), transparent);
+  background: radial-gradient(ellipse at top, var(--blue-background-color), transparent),
+    radial-gradient(ellipse at bottom, var(--orange-background-color), transparent),
+    radial-gradient(ellipse at left, var(--blue-background-color), transparent);
 }
 
 
@@ -74,7 +76,7 @@ body {
 .scrollbarXY::-webkit-scrollbar {
   width: 0.4em;
   height: 0.4em;
-  background-color: var(--blue-color);
+  background-color: var(--blue-background-color);
 }
 
 .scrollbar::-webkit-scrollbar-thumb,
@@ -88,5 +90,5 @@ body {
 .scrollbar::-webkit-scrollbar-corner,
 .scrollbarX::-webkit-scrollbar-corner,
 .scrollbarXY::-webkit-scrollbar-corner {
-  background-color: var(--header-border-color);
+  background-color: var(--blue-border-color);
 }

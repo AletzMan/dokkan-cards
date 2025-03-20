@@ -6,7 +6,7 @@ import Image from "next/image"
 
 export default function Header() {
     return (
-        <header className="fixed top-0 z-10 flex justify-between bg-[linear-gradient(45deg,var(--header-opacity-color),var(--blue-color))] items-center w-full px-4 py-2  border-b-[1px] border-b-[--orange-border-color] overflow-hidden">
+        <header className="fixed top-0 z-10 flex justify-between bg-[linear-gradient(45deg,var(--blue-background-color),var(--blue-color))] items-center w-full px-4 py-2  border-b-[1px] border-b-[--orange-border-color] overflow-hidden">
             <h1 className="text-xl text-[--chakra-colors-bg-inverted] font-bold pl-14">
                 DOKKAN BATTLE
             </h1>
@@ -14,7 +14,7 @@ export default function Header() {
             <nav className="flex gap-4">
             </nav>
 
-            <Drawer.Root size="sm">
+            <Drawer.Root size="sm" >
                 <Drawer.Trigger asChild>
                     <IconButton className="border border-[--orange-color]" size="sm" variant="outline">
                         <Image style={{ filter: "invert(1)" }} src="/menu_icon.webp" width={35} height={35} alt="Logo de dragon ball japones" />
@@ -23,7 +23,7 @@ export default function Header() {
                 <Portal>
                     <Drawer.Backdrop />
                     <Drawer.Positioner>
-                        <Drawer.Content>
+                        <Drawer.Content className="bg-[--blue-background-color] text-[--chakra-colors-bg-inverted]">
                             <Drawer.Header className="flex justify-between items-center">
                                 <Drawer.Title>Menu</Drawer.Title>
                                 <Drawer.CloseTrigger asChild>

@@ -312,8 +312,8 @@ export default function Home() {
         <Image className="absolute -bottom-[10%] left-[25%] w-[50%]" src="/logo_dokkan.webp" width={300} height={200} alt="Fondo dragon ball personajes" />
       </div>
       {/*<Button onClick={getData} loading={loalding}>Scrapear</Button>*/}
-      <div className="border border-[--header-border-color] rounded-md">
-        <h2 className="flex items-center justify-start gap-4 py-2 pl-4 w-full text-center font-bold text-2xl border-b-[1px] border-b-[--header-border-color] bg-[linear-gradient(to_right,var(--blue-color),var(--header-opacity-color))]"><FiClock />Cartas Recientes</h2>
+      <div className="border border-[--blue-border-color] rounded-md">
+        <h2 className="flex items-center justify-start gap-4 py-2 pl-4 w-full text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] bg-[linear-gradient(to_right,var(--blue-color),var(--blue-opacity-color))]"><FiClock />Cartas Recientes</h2>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
           {cards.map(card => (
             <CardCharacter key={card.character} card={{ ...card, hasDate: false }} />
