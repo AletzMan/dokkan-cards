@@ -1,4 +1,7 @@
-import { ColorModeButton } from "@components/ui/color-mode";
+
+import { IconButton } from "@chakra-ui/react";
+import { CloseButton, Drawer, Portal } from "@chakra-ui/react"
+
 import Image from "next/image"
 
 export default function Header() {
@@ -10,7 +13,36 @@ export default function Header() {
             <Image className="absolute -left-10 opacity-100" style={{ filter: "invert(1)" }} src="/logo.png" width={120} height={120} alt="Logo de Goku" />
             <nav className="flex gap-4">
             </nav>
-            <ColorModeButton />
+
+            <Drawer.Root size="sm">
+                <Drawer.Trigger asChild>
+                    <IconButton className="border border-gray-400" size="sm" variant="outline">
+                        <Image style={{ filter: "invert(1)" }} src="/menu_icon.webp" width={35} height={35} alt="Logo de dragon ball japones" />
+                    </IconButton>
+                </Drawer.Trigger>
+                <Portal>
+                    <Drawer.Backdrop />
+                    <Drawer.Positioner>
+                        <Drawer.Content>
+                            <Drawer.Header className="flex justify-between items-center">
+                                <Drawer.Title>Menu</Drawer.Title>
+                                <Drawer.CloseTrigger asChild>
+                                    <CloseButton size="sm" />
+                                </Drawer.CloseTrigger>
+                            </Drawer.Header>
+                            <Drawer.Body>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </Drawer.Body>
+                            <Drawer.Footer>
+                                <Image className=" " style={{ filter: "invert(1)" }} src="/logo.png" width={60} height={600} alt="Logo de Goku" />
+                            </Drawer.Footer>
+                        </Drawer.Content>
+                    </Drawer.Positioner>
+                </Portal>
+            </Drawer.Root>
         </header>
     );
 }

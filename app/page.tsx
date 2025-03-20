@@ -306,10 +306,9 @@ export default function Home() {
   }
 
   return (
-    <section className="flex flex-col bg-[linear-gradient(-45deg,var(--chakra-colors-bg-subtle),var(--chakra-colors-bg-subtle))] items-center justify-items-center pb-4 pt-20 gap-8 font-[family-name:var(--font-jost)] h-svh">
+    <section className="flex flex-col items-center justify-items-center pb-4 pt-20 gap-8 font-[family-name:var(--font-jost)] h-svh">
       <div className="relative">
-        <Image src="/background.webp" width={500} height={400} alt="Fondo dragon ball personajes" />
-        <div className="absolute inset-0 bg-[linear-gradient(0,var(--chakra-colors-bg-subtle),transparent)]"></div>
+        <Image style={{ maskImage: "linear-gradient(black 60%, transparent)" }} src="/background.webp" width={500} height={400} alt="Fondo dragon ball personajes" />
         <Image className="absolute -bottom-[10%] left-[25%] w-[50%]" src="/logo_dokkan.webp" width={300} height={200} alt="Fondo dragon ball personajes" />
       </div>
       {/*<Button onClick={getData} loading={loalding}>Scrapear</Button>*/}
