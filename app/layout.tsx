@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dokkan Battle Cards",
-  description: "A collection of Dokkan Battle cards.",
+  description: "A collection of Dokkan Battle cards."
 };
 
 export default function RootLayout({
@@ -26,8 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <link rel="icon" href="/favicon.png" sizes="any" />
       <body
-        className={`${fontJost.variable} ${geistMono.variable} antialiased`}
+        className={`${fontJost.variable} ${geistMono.variable} antialiased   overflow-hidden`}
       >
         <Provider  >
           <Header />

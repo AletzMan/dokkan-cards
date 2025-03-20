@@ -20,9 +20,13 @@
   --phy-border-color: #e5a526;
   --int-border-color: #84048a;
   --agl-border-color: #1e3ebd;
-  --header-color: #033d6cbb;
-  --header-opacity-color: #033d6c55;
-  --header-border-color: #0a7bd790;
+  --header-color: #1C4FA1bb;
+  --header-opacity-color: #1C4FA155;
+  --header-border-color: #2963bf;
+  --orange-color: #F77908;
+  --orange-border-color: #954703;
+  --orange-background-color: #6a3303;
+  --orange-opacity-color: #F7790830;
 }
 
 @media (prefers-color-scheme: light) {
@@ -43,4 +47,46 @@
 body {
   color: var(--foreground);
   font-family: var(--font-jost);
+  background: radial-gradient(ellipse at top, var(--header-color), transparent),
+    radial-gradient(ellipse at bottom, var(--orange-background-color), transparent);
+}
+
+
+.scrollbar {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.scrollbarXY {
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.scrollbarX {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+
+.scrollbar::-webkit-scrollbar,
+.scrollbarX::-webkit-scrollbar,
+.scrollbarXY::-webkit-scrollbar {
+  width: 0.4em;
+  height: 0.4em;
+  background-color: var(--header-color);
+}
+
+.scrollbar::-webkit-scrollbar-thumb,
+.scrollbarX::-webkit-scrollbar-thumb,
+.scrollbarXY::-webkit-scrollbar-thumb {
+  border-radius: 1em;
+  background-color: var(--orange-color);
+  cursor: pointer;
+}
+
+.scrollbar::-webkit-scrollbar-corner,
+.scrollbarX::-webkit-scrollbar-corner,
+.scrollbarXY::-webkit-scrollbar-corner {
+  background-color: var(--header-border-color);
 }
