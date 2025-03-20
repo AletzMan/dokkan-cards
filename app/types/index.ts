@@ -5,4 +5,6 @@ export interface ICharacterCard {
     element: string | null;
     eza: boolean;
     date: string | null;
+    type: string;
+    ezaType: string | null;
 };

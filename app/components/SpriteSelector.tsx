@@ -11,19 +11,17 @@ interface SpriteFrame {
 
 interface SpriteAnimatorProps {
     frames: SpriteFrame[];
-    backgroundFrame: SpriteFrame;
     className?: string;
     scale: number;
 }
 
-const SpriteCanvas = ({ frames, backgroundFrame, className, scale }: SpriteAnimatorProps) => {
+const SpriteCanvas = ({ frames, className, scale }: SpriteAnimatorProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const sprite = useRef(new Image());
     const [frameIndex, setFrameIndex] = useState(0);
     const [opacity, setOpacity] = useState(1);
     const [isHidden, setIsHidden] = useState(false);
     const [rotation, setRotation] = useState(0);
-    const [bgRotation, setBgRotation] = useState(0);
 
     useEffect(() => {
         sprite.current.src = URL_SPRITE_SHEET;
@@ -44,14 +42,6 @@ const SpriteCanvas = ({ frames, backgroundFrame, className, scale }: SpriteAnima
         // Centrar todo el contenido en el canvas
         ctx.translate(canvasWidth / 2, canvasHeight / 2);
 
-        // 🔵 Dibujar fondo animado girando
-        ctx.save();
-        ctx.rotate((bgRotation * Math.PI) / 180);
-        const { x: bgX, y: bgY, width: bgWidth, height: bgHeight } = backgroundFrame;
-        ctx.globalAlpha = 0.4; // Ajustado para mejor visibilidad
-        ctx.drawImage(sprite.current, bgX, bgY, bgWidth, bgHeight, -bgWidth * scale / 2, -bgHeight * scale / 2, (bgWidth * scale) - 10, (bgHeight * scale) - 10);
-        ctx.restore();
-
         // 🔴 Dibujar el sprite principal animado
         if (!isHidden) {
             ctx.save();
@@ -67,7 +57,7 @@ const SpriteCanvas = ({ frames, backgroundFrame, className, scale }: SpriteAnima
 
     useEffect(() => {
         draw();
-    }, [frameIndex, opacity, isHidden, rotation, bgRotation]);
+    }, [frameIndex, opacity, isHidden, rotation]);
 
     useEffect(() => {
         let fadeOut: NodeJS.Timeout;
@@ -78,7 +68,6 @@ const SpriteCanvas = ({ frames, backgroundFrame, className, scale }: SpriteAnima
         const animateFrame = () => {
             setOpacity(1);
             setRotation((prev) => (prev + 90) % 360);
-            setBgRotation((prev) => (prev + 10) % 360); // Ajustado para rotación más fluida
 
             fadeOut = setTimeout(() => {
                 let fadeStep = 1;
@@ -97,7 +86,7 @@ const SpriteCanvas = ({ frames, backgroundFrame, className, scale }: SpriteAnima
             if (Math.random() < 0.4) {
                 hideFrame = setTimeout(() => {
                     setIsHidden(true);
-                    setTimeout(() => setIsHidden(false), 200 + Math.random() * 500);
+                    setTimeout(() => setIsHidden(false), 500 + Math.random() * 800);
                 }, 100);
             }
         };

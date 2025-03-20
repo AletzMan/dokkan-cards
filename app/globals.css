@@ -5,6 +5,21 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --teq-background-color: #004F17;
+  --str-background-color: #711100;
+  --phy-background-color: #AA7500;
+  --int-background-color: #660071;
+  --agl-background-color: #082492;
+  --teq-opacity-color: #004F1760;
+  --str-opacity-color: #71110060;
+  --phy-opacity-color: #AA750060;
+  --int-opacity-color: #66007160;
+  --agl-opacity-color: #08249260;
+  --teq-border-color: #117721;
+  --str-border-color: #991c00;
+  --phy-border-color: #e6b044;
+  --int-border-color: #84048a;
+  --agl-border-color: #1e3ebd;
 }
 
 @media (prefers-color-scheme: dark) {

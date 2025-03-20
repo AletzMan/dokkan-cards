@@ -1,0 +1,44 @@
+.card {
+
+    &:hover {
+        .card_character {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.card_character {
+    transition: all 0.25s ease-in-out;
+    min-width: 130px;
+    min-height: 130px;
+}
+
+.wrapper_light {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    min-height: 100px;
+    min-width: 100px;
+    overflow: hidden;
+    animation: spin 5s linear infinite;
+    /* background-color: #33333360;*/
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.background_light {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    object-position: top left;
+
+    /* Muestra la parte superior */
+}
