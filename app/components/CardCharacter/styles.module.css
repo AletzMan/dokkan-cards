@@ -1,6 +1,8 @@
 .card {
+    cursor: pointer;
 
     &:hover {
+
         .card_character {
             transform: scale(1.1);
         }
@@ -9,8 +11,9 @@
 
 .card_character {
     transition: all 0.25s ease-in-out;
-    min-width: 130px;
-    min-height: 130px;
+    min-width: 133px;
+    min-height: 133px;
+    transform-origin: bottom center;
 }
 
 .wrapper_light {

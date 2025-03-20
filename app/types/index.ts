@@ -1,4 +1,5 @@
 export interface ICharacterCard {
+    id: number
     background: string | null;
     character: string | null;
     rarity: string | null;

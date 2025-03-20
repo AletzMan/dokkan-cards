@@ -4,187 +4,284 @@ import { Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { ICharacterCard } from "./types";
 import { CardCharacter } from "./components/CardCharacter/CardCharacter";
+import { FiClock } from "react-icons/fi";
+
 
 const dataDefault: ICharacterCard[] = [
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_01_04.png",
-    "character": "/assets/global/en/character/thumb/card_1030300_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_11.png",
+    "id": 1030300,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_01_03.png",
+    "character": "/assets/global/es/character/thumb/card_1030300_thumb.png",
+    "rarity": "SSR",
+    "element": "01",
     "eza": false,
-    "date": "21 mar 2025, 12:30 a.m. GMT-6",
-    "type": "teq",
+    "date": null,
+    "type": "TEQ",
     "ezaType": null
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_01_04.png",
-    "character": "/assets/global/en/character/thumb/card_1025640_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_11.png",
+    "id": 1025640,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_01_04.png",
+    "character": "/assets/global/es/character/thumb/card_1025640_thumb.png",
+    "rarity": "UR",
+    "element": "11",
     "eza": true,
-    "date": "21 mar 2025, 12:30 a.m. GMT-6",
-    "type": "teq",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
+    "date": null,
+    "type": "TEQ",
+    "ezaType": "kyokugen"
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_03_04.png",
-    "character": "/assets/global/en/character/thumb/card_1024630_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_23.png",
+    "id": 1024630,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_03_04.png",
+    "character": "/assets/global/es/character/thumb/card_1024630_thumb.png",
+    "rarity": "UR",
+    "element": "23",
     "eza": true,
-    "date": "21 mar 2025, 12:30 a.m. GMT-6",
-    "type": "str",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
+    "date": null,
+    "type": "STR",
+    "ezaType": "kyokugen"
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_04_04.png",
-    "character": "/assets/global/en/character/thumb/card_1020040_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_14.png",
+    "id": 1020040,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_04.png",
+    "character": "/assets/global/es/character/thumb/card_1020040_thumb.png",
+    "rarity": "UR",
+    "element": "14",
     "eza": true,
-    "date": "21 mar 2025, 12:30 a.m. GMT-6",
-    "type": "phy",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
+    "date": null,
+    "type": "PHY",
+    "ezaType": "kyokugen"
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_04_04.png",
-    "character": "/assets/global/en/character/thumb/card_1025070_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_14.png",
+    "id": 1025070,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_04.png",
+    "character": "/assets/global/es/character/thumb/card_1025070_thumb.png",
+    "rarity": "UR",
+    "element": "14",
     "eza": true,
-    "date": "19 mar 2025, 11:00 p.m. GMT-6",
-    "type": "phy",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
+    "date": null,
+    "type": "PHY",
+    "ezaType": "kyokugen"
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_02_04.png",
-    "character": "/assets/global/en/character/thumb/card_1031100_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_12.png",
+    "id": 1031100,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_02_04.png",
+    "character": "/assets/global/es/character/thumb/card_1031100_thumb.png",
+    "rarity": "UR",
+    "element": "12",
     "eza": false,
-    "date": "18 mar 2025, 12:18 a.m. GMT-6",
-    "type": "int",
+    "date": null,
+    "type": "INT",
     "ezaType": null
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_00_04.png",
-    "character": "/assets/global/en/character/thumb/card_1031080_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_10.png",
+    "id": 1031090,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_02_03.png",
+    "character": "/assets/global/es/character/thumb/card_1031090_thumb.png",
+    "rarity": "SSR",
+    "element": "02",
     "eza": false,
-    "date": "18 mar 2025, 12:18 a.m. GMT-6",
-    "type": "agl",
+    "date": null,
+    "type": "INT",
     "ezaType": null
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_02_04.png",
-    "character": "/assets/global/en/character/thumb/card_1021940_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_12.png",
-    "eza": true,
-    "date": "5 mar 2025, 11:00 p.m. GMT-6",
-    "type": "int",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
-  },
-  {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_04_04.png",
-    "character": "/assets/global/en/character/thumb/card_1021920_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_14.png",
-    "eza": true,
-    "date": "5 mar 2025, 11:00 p.m. GMT-6",
-    "type": "phy",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
-  },
-  {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_03_04.png",
-    "character": "/assets/global/en/character/thumb/card_1005730_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_13.png",
-    "eza": true,
-    "date": "5 mar 2025, 11:00 p.m. GMT-6",
-    "type": "str",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_super_optimal.png"
-  },
-  {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_04_04.png",
-    "character": "/assets/global/en/character/thumb/card_1031060_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_14.png",
+    "id": 1031080,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_00_04.png",
+    "character": "/assets/global/es/character/thumb/card_1031080_thumb.png",
+    "rarity": "UR",
+    "element": "10",
     "eza": false,
-    "date": "3 mar 2025, 11:00 p.m. GMT-6",
-    "type": "phy",
+    "date": null,
+    "type": "AGL",
     "ezaType": null
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_04_05.png",
-    "character": "/assets/global/en/character/thumb/card_1022420_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_lr.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_14.png",
-    "eza": true,
-    "date": "26 feb 2025, 2:00 a.m. GMT-6",
-    "type": "phy",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
-  },
-  {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_01_05.png",
-    "character": "/assets/global/en/character/thumb/card_1022380_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_lr.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_11.png",
-    "eza": true,
-    "date": "26 feb 2025, 2:00 a.m. GMT-6",
-    "type": "teq",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
-  },
-  {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_00_05.png",
-    "character": "/assets/global/en/character/thumb/card_1030790_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_lr.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_20.png",
+    "id": 1031070,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_00_03.png",
+    "character": "/assets/global/es/character/thumb/card_1031070_thumb.png",
+    "rarity": "SSR",
+    "element": "00",
     "eza": false,
-    "date": "20 feb 2025, 11:00 p.m. GMT-6",
-    "type": "agl",
+    "date": null,
+    "type": "AGL",
     "ezaType": null
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_04_04.png",
-    "character": "/assets/global/en/character/thumb/card_1030670_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_14.png",
+    "id": 1021940,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_02_04.png",
+    "character": "/assets/global/es/character/thumb/card_1021940_thumb.png",
+    "rarity": "UR",
+    "element": "12",
+    "eza": true,
+    "date": null,
+    "type": "INT",
+    "ezaType": "kyokugen"
+  },
+  {
+    "id": 1021920,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_04.png",
+    "character": "/assets/global/es/character/thumb/card_1021920_thumb.png",
+    "rarity": "UR",
+    "element": "14",
+    "eza": true,
+    "date": null,
+    "type": "PHY",
+    "ezaType": "kyokugen"
+  },
+  {
+    "id": 1005730,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_03_04.png",
+    "character": "/assets/global/es/character/thumb/card_1005730_thumb.png",
+    "rarity": "UR",
+    "element": "13",
+    "eza": true,
+    "date": null,
+    "type": "STR",
+    "ezaType": "super_optimal"
+  },
+  {
+    "id": 1031060,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_04.png",
+    "character": "/assets/global/es/character/thumb/card_1031060_thumb.png",
+    "rarity": "UR",
+    "element": "14",
     "eza": false,
-    "date": "20 feb 2025, 11:00 p.m. GMT-6",
-    "type": "phy",
+    "date": null,
+    "type": "PHY",
     "ezaType": null
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_04_04.png",
-    "character": "/assets/global/en/character/thumb/card_1030610_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_ur.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_14.png",
+    "id": 1031050,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_03.png",
+    "character": "/assets/global/es/character/thumb/card_1031050_thumb.png",
+    "rarity": "SSR",
+    "element": "04",
     "eza": false,
-    "date": "20 feb 2025, 11:00 p.m. GMT-6",
-    "type": "phy",
+    "date": null,
+    "type": "PHY",
     "ezaType": null
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_03_05.png",
-    "character": "/assets/global/en/character/thumb/card_1023620_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_lr.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_13.png",
+    "id": 1022420,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_05.png",
+    "character": "/assets/global/es/character/thumb/card_1022420_thumb.png",
+    "rarity": "LR",
+    "element": "14",
     "eza": true,
-    "date": "20 feb 2025, 11:00 p.m. GMT-6",
-    "type": "str",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
+    "date": null,
+    "type": "PHY",
+    "ezaType": "kyokugen"
   },
   {
-    "background": "/assets/global/en/layout/en/image/character/character_thumb_bg/cha_base_01_05.png",
-    "character": "/assets/global/en/character/thumb/card_1023520_thumb.png",
-    "rarity": "/assets/global/en/layout/en/image/character/cha_rare_sm_lr.png",
-    "element": "/assets/global/en/layout/en/image/character/cha_type_icon_21.png",
+    "id": 1022380,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_01_05.png",
+    "character": "/assets/global/es/character/thumb/card_1022380_thumb.png",
+    "rarity": "LR",
+    "element": "11",
     "eza": true,
-    "date": "20 feb 2025, 11:00 p.m. GMT-6",
-    "type": "teq",
-    "ezaType": "https://glbes.dokkaninfo.com/assets/global/es/layout/es/image/charamenu/dokkan/dok_img_kyokugen.png"
+    "date": null,
+    "type": "TEQ",
+    "ezaType": "kyokugen"
+  },
+  {
+    "id": 1030790,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_00_05.png",
+    "character": "/assets/global/es/character/thumb/card_1030790_thumb.png",
+    "rarity": "LR",
+    "element": "20",
+    "eza": false,
+    "date": null,
+    "type": "AGL",
+    "ezaType": null
+  },
+  {
+    "id": 1030780,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_00_04.png",
+    "character": "/assets/global/es/character/thumb/card_1030780_thumb.png",
+    "rarity": "UR",
+    "element": "20",
+    "eza": false,
+    "date": null,
+    "type": "AGL",
+    "ezaType": null
+  },
+  {
+    "id": 1030670,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_04.png",
+    "character": "/assets/global/es/character/thumb/card_1030670_thumb.png",
+    "rarity": "UR",
+    "element": "14",
+    "eza": false,
+    "date": null,
+    "type": "PHY",
+    "ezaType": null
+  },
+  {
+    "id": 1030610,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_04_04.png",
+    "character": "/assets/global/es/character/thumb/card_1030610_thumb.png",
+    "rarity": "UR",
+    "element": "14",
+    "eza": false,
+    "date": null,
+    "type": "PHY",
+    "ezaType": null
+  },
+  {
+    "id": 1023620,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_03_05.png",
+    "character": "/assets/global/es/character/thumb/card_1023620_thumb.png",
+    "rarity": "LR",
+    "element": "13",
+    "eza": true,
+    "date": null,
+    "type": "STR",
+    "ezaType": "kyokugen"
+  },
+  {
+    "id": 1023520,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_01_05.png",
+    "character": "/assets/global/es/character/thumb/card_1023520_thumb.png",
+    "rarity": "LR",
+    "element": "21",
+    "eza": true,
+    "date": null,
+    "type": "TEQ",
+    "ezaType": "kyokugen"
+  },
+  {
+    "id": 1010070,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_02_05.png",
+    "character": "/assets/global/es/character/thumb/card_1010070_thumb.png",
+    "rarity": "LR",
+    "element": "12",
+    "eza": true,
+    "date": null,
+    "type": "INT",
+    "ezaType": "super_optimal"
+  },
+  {
+    "id": 1004650,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_01_04.png",
+    "character": "/assets/global/es/character/thumb/card_1004650_thumb.png",
+    "rarity": "UR",
+    "element": "21",
+    "eza": true,
+    "date": null,
+    "type": "TEQ",
+    "ezaType": "super_optimal"
+  },
+  {
+    "id": 1030830,
+    "background": "/assets/global/es/layout/es/image/character/character_thumb_bg/cha_base_00_04.png",
+    "character": "/assets/global/es/character/thumb/card_1030830_thumb.png",
+    "rarity": "UR",
+    "element": "10",
+    "eza": false,
+    "date": null,
+    "type": "AGL",
+    "ezaType": null
   }
 ]
 
@@ -208,14 +305,16 @@ export default function Home() {
   }
 
   return (
-    <section className="flex flex-col bg-(--background) items-center justify-items-center px-4 pb-4 gap-16 font-[family-name:var(--font-jost)] h-[calc(100svh-2em)]">
+    <section className="flex flex-col bg-[linear-gradient(-45deg,var(--chakra-colors-bg-emphasized),var(--chakra-colors-bg))] items-center justify-items-center pb-4 gap-16 font-[family-name:var(--font-jost)] h-svh">
       <Header />
       <Button onClick={getData} loading={loalding}>Scrapear</Button>
-
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(112px,1fr))] content-start gap-4 bg-slate-950 w-[calc(100svw-2em)] h-[calc(100svh-2em)] max-w-screen-xl p-2">
-        {cards.map(card => (
-          <CardCharacter key={card.character} card={{ ...card, hasDate: true }} />
-        ))}
+      <div className="border border-cyan-900  rounded-md">
+        <h2 className="flex items-center justify-start gap-4 py-2 pl-4 w-full text-center font-bold text-2xl border-b-[1px] border-b-[--header-border-color] bg-[linear-gradient(to_right,var(--header-color),var(--header-opacity-color))]"><FiClock />Cartas Recientes</h2>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
+          {cards.map(card => (
+            <CardCharacter key={card.character} card={{ ...card, hasDate: false }} />
+          ))}
+        </div>
       </div>
     </section>
   );

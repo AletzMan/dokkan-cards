@@ -1,29 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import { chromium } from "@playwright/test";
-import { JSDOM } from "jsdom";
 import { ICharacterCard } from "@/app/types";
-import { URL_EZA, URL_SUPER_EZA } from "@/app/constants";
 
-const URL = "https://dokkan.wiki/";
+const URL = "https://glbes.dokkaninfo.com/";
 
 export async function GET(request: NextRequest, response: NextResponse) {
 
     try {
         const browser = await chromium.launch();
-
-        // await page.goto(URL, { waitUntil: "load", timeout: 60000 });
         const context = await browser.newContext({
             userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
         });
         const page = await context.newPage();
         await page.goto(URL);
 
-
-
-        // Extraer los elementos .card-thumb
         const data = await page.evaluate(() => {
-            return Array.from(document.querySelectorAll("div.card-thumb")).map(el => el.innerHTML);
+            return Array.from(document.querySelectorAll("a.card-icon")).map(el => el.innerHTML);
         });
 
         await browser.close();
@@ -40,31 +33,71 @@ export async function GET(request: NextRequest, response: NextResponse) {
     }
 }
 
-
 function parseCharacterCards(htmlStringArray: string[]): ICharacterCard[] {
     return htmlStringArray.map(htmlString => {
-        const dom = new JSDOM(htmlString);
-        const doc = dom.window.document;
-
-        // Extraer el tipo (STR, TEQ, PHY, etc.)
-        const divElement = doc.querySelector(".card-info-box.dokkan-box");
-        const types = ["str", "teq", "phy", "agl", "int"];
-        const type = divElement ? types.find(t => divElement.classList.contains(t)) ?? "" : "";
-
-        // Detectar si es EZA o Super EZA
-        let ezaType: string | null = null;
-        if (doc.querySelector(".card-eza")) ezaType = URL_EZA;
-        if (doc.querySelector(".card-super-eza")) ezaType = URL_SUPER_EZA;
-
-        return {
-            background: doc.querySelector<HTMLImageElement>(".card-thumb-bg")?.src || null,
-            character: doc.querySelector<HTMLImageElement>(".card-thumb-character")?.src || null,
-            rarity: doc.querySelector<HTMLImageElement>(".card-rarity")?.src || null,
-            element: doc.querySelector<HTMLImageElement>(".card-element")?.src || null,
-            eza: !!doc.querySelector(".card-eza"),
-            date: doc.querySelector<HTMLSpanElement>(".card-info-box span")?.textContent?.trim() || null,
-            type,
-            ezaType
+        const card: ICharacterCard = {
+            id: 0,
+            background: null,
+            character: null,
+            rarity: null,
+            element: null,
+            eza: false,
+            date: null,
+            type: "",
+            ezaType: null,
         };
+
+        // ID del personaje
+        const characterMatch = htmlString.match(/card_(\d+)_thumb\.png/);
+        if (characterMatch) {
+            card.id = parseInt(characterMatch[1], 10);
+        }
+
+        // URL de la imagen de fondo
+        const backgroundMatch = htmlString.match(/src="([^"]*cha_base_[^"]*\.png)"/);
+        if (backgroundMatch) {
+            card.background = backgroundMatch[1];
+        }
+
+        // URL de la imagen del personaje
+        const characterImageMatch = htmlString.match(/src="([^"]*card_\d+_thumb\.png)"/);
+        if (characterImageMatch) {
+            card.character = characterImageMatch[1];
+        }
+
+        // Rareza del personaje
+        const rarityMatch = htmlString.match(/cha_rare_sm_([a-z]+)\.png/);
+        if (rarityMatch) {
+            card.rarity = rarityMatch[1].toUpperCase();
+        }
+
+        // Elemento del personaje
+        const elementMatch = htmlString.match(/cha_type_icon_(\d+)\.png/);
+        if (elementMatch) {
+            card.element = elementMatch[1];
+            const elementNumber = parseInt(elementMatch[1], 10);
+
+            // Determinar el tipo basado en el número del elemento
+            if ([1, 11, 21].includes(elementNumber)) {
+                card.type = "TEQ";
+            } else if ([2, 12, 22].includes(elementNumber)) {
+                card.type = "INT";
+            } else if ([3, 13, 23].includes(elementNumber)) {
+                card.type = "STR";
+            } else if ([4, 14, 24].includes(elementNumber)) {
+                card.type = "PHY";
+            } else if ([0, 10, 20].includes(elementNumber)) {
+                card.type = "AGL";
+            }
+        }
+
+        // EZA (Extreme Z-Awakening)
+        const ezaMatch = htmlString.match(/dok_img_([a-z_]+)\.png/);
+        if (ezaMatch) {
+            card.eza = true;
+            card.ezaType = ezaMatch[1];
+        }
+
+        return card;
     });
 }
