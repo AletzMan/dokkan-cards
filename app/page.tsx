@@ -7,6 +7,8 @@ import { CardCharacter } from "./components/CardCharacter/CardCharacter";
 import { FiClock } from "react-icons/fi";
 import Image from "next/image";
 import { URL_API } from "./constants";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import { GiSparkles } from "react-icons/gi";
 
 
 const dataDefault: ICharacterCard[] = [
@@ -343,6 +345,26 @@ export default function Home() {
   const [loalding, setLoading] = useState(false);
   const [cards, setCards] = useState<ICharacterCard[]>(dataDefault);
   const [banners, setBanners] = useState<IBannerData[]>(bannersDefault);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const changeSlide = (newIndex: number) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setIsTransitioning(false);
+    }, 500); // Match this with CSS transition duration
+  };
+
+  const nextBanner = () => {
+    const newIndex = (currentIndex + 1) % banners.length;
+    changeSlide(newIndex);
+  };
+
+  const prevBanner = () => {
+    const newIndex = (currentIndex - 1 + banners.length) % banners.length;
+    changeSlide(newIndex);
+  };
 
   const getData = async () => {
     try {
@@ -359,32 +381,90 @@ export default function Home() {
   }
 
   return (
-    <section className="flex flex-col items-center justify-items-center pb-4 mt-[53px] gap-8 font-[family-name:var(--font-jost)] h-[calc(100svh-55px)] scrollbar">
+    <section className="flex flex-col items-center justify-items-center pb-4 mt-[53px] gap-8 font-[family-name:var(--font-jost)] h-[calc(100svh-55px)] scrollbar bg-[radial-gradient(ellipse_at_bottom,rgba(83,196,255,0.5)0%,rgba(43,166,255,0)100%)]">
       <div className="relative">
         <Image style={{ maskImage: "linear-gradient(black 60%, transparent)" }} src="/background.webp" width={500} height={400} alt="Fondo dragon ball personajes" />
         <Image className="absolute -bottom-[10%] left-[25%] w-[50%]" src="/logo_dokkan.webp" width={300} height={200} alt="Fondo dragon ball personajes" />
       </div>
       {/*<Button onClick={getData} loading={loalding}>Scrapear</Button>*/}
-      <div className="border border-[--blue-border-color] rounded-md">
-        <h2 className="flex items-center justify-start gap-4 py-2 pl-4 w-full text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] bg-[linear-gradient(to_right,var(--blue-color),var(--blue-opacity-color))]"><FiClock />Cartas Recientes</h2>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
-          {cards.map(card => (
-            <CardCharacter key={card.character} card={{ ...card, hasDate: false }} />
-          ))}
-        </div>
+      <h2 className="relative flex items-center justify-center gap-4 py-4 pl-4 w-full max-w-screen-xl text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] ">Cartas Recientes<span className="absolute text-white/5 text-7xl">Cartas Recientes</span></h2>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
+        {cards.map(card => (
+          <CardCharacter key={card.character} card={{ ...card, hasDate: false }} />
+        ))}
       </div>
-      <div className="border border-[--blue-border-color] rounded-md">
-        <h2 className="flex items-center justify-start gap-4 py-2 pl-4 w-full text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] bg-[linear-gradient(to_right,var(--blue-color),var(--blue-opacity-color))]"><FiClock />Banners Recientes</h2>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
+      <h2 className="relative flex items-center justify-center gap-4 py-4 pl-4 w-full max-w-screen-xl text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] ">Banners Recientes<span className="absolute text-white/5 text-7xl">Banners Recientes</span></h2>
+      <div className="min-h-screen   text-white w-full max-w-screen-xl">
+
+        {/* Main Content */}
+        <main className="container mx-auto px-4 py-8 ">
+          {/* Banner Carousel */}
+          <div className="relative max-w-4xl mx-auto">
+            <div className="relative aspect-[16/9] rounded-lg overflow-hidden shadow-2xl">
+              <div className="absolute w-full h-full bg-[linear-gradient(0deg,#000000,transparent)] z-[2]"></div>
+              <div className="absolute w-full h-full bg-[linear-gradient(90deg,#000000,transparent_30%)] z-[2]"></div>
+              <div className="absolute w-full h-full bg-[linear-gradient(-90deg,#000000,transparent_30%)] z-[2]"></div>
+              <div className={`absolute inset-0 transition-opacity duration-500 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+                <Image
+                  src={URL_API.concat(banners[currentIndex].image)}
+                  alt={banners[currentIndex].title}
+                  width={640} height={360}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 z-[3]">
+                  <h2 className="text-3xl font-bold text-[#ffd700] mb-2">
+                    {banners[currentIndex].title}
+                  </h2>
+                  <p className="text-lg text-gray-200">
+                    {banners[currentIndex].description}
+                  </p>
+                  <p className="text-sm text-[#ff9b00] mt-2">
+                    {banners[currentIndex].startDate}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={prevBanner}
+              disabled={isTransitioning}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm px-1 py-4 rounded-l-md hover:bg-[--orange-opacity-color] hover:text-[--orange-color] transition-colors disabled:opacity-50 z-[3]"
+            >
+              <BiLeftArrow />
+            </button>
+            <button
+              onClick={nextBanner}
+              disabled={isTransitioning}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 px-1 py-4 rounded-r-md hover:bg-[--orange-opacity-color] hover:text-[--orange-color] transition-colors disabled:opacity-50 z-[3]"
+            >
+              <BiRightArrow />
+            </button>
+          </div>
+
+          {/* Banner Indicators */}
+          <div className="flex justify-center gap-2 mt-4">
+            {banners.map((_, index) => (
+              <button
+                key={index}
+                disabled={isTransitioning}
+                onClick={() => changeSlide(index)}
+                className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? 'bg-[#ffd700]' : 'bg-gray-600'
+                  } disabled:opacity-50`}
+              />
+            ))}
+          </div>
+        </main>
+      </div>
+      {/*<div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
           {banners.map(banner => (
-            <a key={banner.id} href={`/banner/${banner.id}`} className="flex flex-col items-center justify-start gap-4 p-2 border border-[--orange-border-color] rounded-md">
+            <a key={banner.id} href={`/banner/${banner.id}`} className="flex flex-col items-center justify-start gap-4 p-2 border border-[--orange-border-color] rounded-md hover:border-[--orange-color] bg-[--orange-opacity-color]">
+              <h3 className="flex justify-center items-center text-base font-semibold text-balance text-center bg-[--blue-background-color] px-2 py-1 w-full rounded-sm min-h-20">{banner.title}</h3>
               <Image src={URL_API.concat(banner.image)} width={340} height={259} alt="Fondo de banner de dokkan" />
-              <h3 className="text-base font-semibold text-balance text-center bg-[--orange-opacity-color] px-2 py-1 w-full rounded-sm">{banner.title}</h3>
               <p className="text-sm bg-[--blue-opacity-color] p-2">{banner.description}</p>
             </a>
           ))}
-        </div>
-      </div>
+        </div>*/}
     </section>
   );
 }
