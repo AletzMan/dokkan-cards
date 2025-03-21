@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import { chromium } from "@playwright/test";
-import { JSDOM } from "jsdom"; // Importamos JSDOM para parsear el HTML
+import { JSDOM } from "jsdom";
 
-const URL = "https://glbes.dokkaninfo.com/"; // Reemplaza con la URL correcta
+const URL = "https://glbes.dokkaninfo.com/";
 
 export async function GET(request: NextRequest, response: NextResponse) {
     try {
@@ -14,10 +14,9 @@ export async function GET(request: NextRequest, response: NextResponse) {
         const page = await context.newPage();
         await page.goto(URL);
 
-        // Extraer los anchors que tienen href que comienza con "banners/"
         const bannerData = await page.evaluate(() => {
             const banners = Array.from(document.querySelectorAll('a[href^="banners/"]'));
-            return banners.map(banner => banner.outerHTML); // Obtener el HTML completo del anchor
+            return banners.map(banner => banner.outerHTML);
         });
 
         await browser.close();
@@ -38,25 +37,40 @@ function parseBanners(htmlStringArray: string[]) {
         const bannerLink = doc.querySelector('a');
 
         if (!bannerLink) {
-            return null; // Manejar el caso donde no se encuentra el anchor
+            return null;
         }
 
         const href = bannerLink.href;
-        const bannerId = href.split('/').pop(); // Obtener el ID del banner de la URL
+        const bannerId = href.split('/').pop();
 
         const bannerImage = doc.querySelector<HTMLImageElement>('img.img-fluid')?.src || null;
         const bannerTitle = doc.querySelector('b')?.textContent?.trim() || null;
         const bannerDescription = doc.querySelectorAll('div[style="min-height: 75px;"] div.col.container-text-center')[0]?.textContent?.trim() || null;
-        const startDate = doc.querySelectorAll('div.col')[3]?.textContent?.trim() || null;
-        const endDate = doc.querySelectorAll('div.col')[4]?.textContent?.trim() || null;
+
+        // Extraer las fechas correctamente y formatearlas
+        const dateRows = doc.querySelectorAll('div.row.padding-top-bottom-5 div.col div.row div.col');
+        let startDate = null;
+        let endDate = null;
+
+        if (dateRows.length >= 2) {
+            const startText = dateRows[0]?.textContent?.trim() || null;
+            const endText = dateRows[1]?.textContent?.trim() || null;
+
+            if (startText) {
+                startDate = "Del: " + startText.replace("Comienza en: ", "").replace("hora estándar central", "CST");
+            }
+            if (endText) {
+                endDate = "Al: " + endText.replace("El termina en: ", "").replace("hora estándar central", "CST");
+            }
+        }
 
         return {
-            id: bannerId,
+            id: Number(bannerId),
             image: bannerImage,
             title: bannerTitle,
             description: bannerDescription,
             startDate: startDate,
             endDate: endDate,
         };
-    }).filter(banner => banner !== null); // Eliminar los banners nulos
+    }).filter(banner => banner !== null);
 }
