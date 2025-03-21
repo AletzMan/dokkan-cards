@@ -15,6 +15,17 @@ export interface IBannerData {
     image: string,
     title: string,
     description: string,
+    date?: string,
     startDate: string,
     endDate: string,
+}
+
+export interface INewData {
+    id: number,
+    image: string,
+    title: string,
+    description: string,
+    date: string,
+    startDate?: string,
+    endDate?: string,
 }
