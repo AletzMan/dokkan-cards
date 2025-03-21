@@ -1,14 +1,11 @@
 "use client"
-import Header from "@components/Header";
-import { Button } from "@chakra-ui/react";
 import { useState } from "react";
-import { IBannerData, ICharacterCard } from "./types";
+import { IBannerData, ICharacterCard, INewData } from "./types";
 import { CardCharacter } from "./components/CardCharacter/CardCharacter";
-import { FiClock } from "react-icons/fi";
 import Image from "next/image";
-import { URL_API } from "./constants";
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import { GiSparkles } from "react-icons/gi";
+import { HeaderTitle } from "./components/HeaderTitle";
+import { EventCard } from "./components/EventCard";
+import { Section } from "./components/Section";
 
 
 const dataDefault: ICharacterCard[] = [
@@ -291,80 +288,107 @@ const dataDefault: ICharacterCard[] = [
 
 const bannersDefault: IBannerData[] = [
   {
-    "id": "11494",
+    "id": 11494,
     "image": "/assets/global/es/ingame/banners/gasha_top_banner_11494.png",
     "title": "Festival DOKKAN [Goku (niño)]",
     "description": "¡Solo 318 horas! ¡Realiza 3 Invocaciones Múltiples para obtener una gratuita! ¡El nuevo Goku (niño) SSR hace acto de presencia!",
-    "startDate": "¡Solo 318 horas! ¡Realiza 3 Invocaciones Múltiples para obtener una gratuita! ¡El nuevo Goku (niño) SSR hace acto de presencia!",
-    "endDate": "Comienza en: 18/3/2025\n                               12:18:00 a.m.\n                               hora estándar central El termina en: 31/3/2025\n                               6:17:59 a.m.\n                               hora estándar central"
+    "startDate": "Del: 18/3/2025\n                               12:18:00 a.m.\n                               CST",
+    "endDate": "Al: 31/3/2025\n                               6:17:59 a.m.\n                               CST"
   },
   {
-    "id": "11500",
+    "id": 11500,
     "image": "/assets/global/es/ingame/banners/gasha_top_banner_11500.png",
     "title": "Festival DOKKAN: Invocación de Ticket [Goku (niño)]",
     "description": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Goku (niño) SSR hace acto de presencia! ¡Un personaje SSR garantizado por Invocación Múltiple!",
-    "startDate": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Goku (niño) SSR hace acto de presencia! ¡Un personaje SSR garantizado por Invocación Múltiple!",
-    "endDate": "Comienza en: 18/3/2025\n                               12:18:00 a.m.\n                               hora estándar central El termina en: 10/4/2025\n                               1:59:59 a.m.\n                               hora estándar central"
+    "startDate": "Del: 18/3/2025\n                               12:18:00 a.m.\n                               CST",
+    "endDate": "Al: 10/4/2025\n                               1:59:59 a.m.\n                               CST"
   },
   {
-    "id": "11502",
+    "id": 11502,
     "image": "/assets/global/es/ingame/banners/gasha_top_banner_11128.png",
     "title": "Invocación Ritual misterioso",
     "description": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
-    "startDate": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
-    "endDate": "Comienza en: 17/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 31/3/2025\n                               10:59:59 p.m.\n                               hora estándar central"
+    "startDate": "Del: 17/3/2025\n                               11:00:00 p.m.\n                               CST",
+    "endDate": "Al: 31/3/2025\n                               10:59:59 p.m.\n                               CST"
   },
   {
-    "id": "11460",
+    "id": 11460,
     "image": "/assets/global/es/ingame/banners/gasha_top_banner_11460.png",
     "title": "Festival DOKKAN [Vegeta Super Saiyajin 3 (Mini) (DAIMA)]",
     "description": "¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) SSR hace acto de presencia en el Festival DOKKAN! ¡No te pierdas su animación de aparición tras realizar el Despertar Dokkan!",
-    "startDate": "¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) SSR hace acto de presencia en el Festival DOKKAN! ¡No te pierdas su animación de aparición tras realizar el Despertar Dokkan!",
-    "endDate": "Comienza en: 3/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 18/3/2025\n                               1:59:59 a.m.\n                               hora estándar central"
+    "startDate": "Del: 3/3/2025\n                               11:00:00 p.m.\n                               CST",
+    "endDate": "Al: 18/3/2025\n                               1:59:59 a.m.\n                               CST"
   },
   {
-    "id": "11490",
+    "id": 11490,
     "image": "/assets/global/es/ingame/banners/gasha_top_banner_11490.png",
     "title": "Festival DOKKAN: Invocación de Ticket [Vegeta Super Saiyajin 3 (Mini) (DAIMA)]",
     "description": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) está aquí! ¡Dos Monedas del Festival Dokkan (limitada) 4 por Invocación Múltiple!",
-    "startDate": "Festival DOKKAN: Invocación de Ticket ¡El nuevo Vegeta Super Saiyajin 3 (Mini) (DAIMA) está aquí! ¡Dos Monedas del Festival Dokkan (limitada) 4 por Invocación Múltiple!",
-    "endDate": "Comienza en: 3/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 25/3/2025\n                               1:59:59 a.m.\n                               hora estándar central"
+    "startDate": "Del: 3/3/2025\n                               11:00:00 p.m.\n                               CST",
+    "endDate": "Al: 25/3/2025\n                               1:59:59 a.m.\n                               CST"
   },
   {
-    "id": "11492",
+    "id": 11492,
     "image": "/assets/global/es/ingame/banners/gasha_top_banner_11128.png",
     "title": "Invocación Ritual misterioso",
     "description": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
-    "startDate": "¡Solo 4 veces! ¡Invocación \"Ritual Misterioso\"! ¡Usa 25 Piedras de Dragón para invocar 5 Kaioshin Anciano!",
-    "endDate": "Comienza en: 3/3/2025\n                               11:00:00 p.m.\n                               hora estándar central El termina en: 17/3/2025\n                               10:59:59 p.m.\n                               hora estándar central"
+    "startDate": "Del: 3/3/2025\n                               11:00:00 p.m.\n                               CST",
+    "endDate": "Al: 17/3/2025\n                               10:59:59 p.m.\n                               CST"
+  }
+]
+
+const newsDataDefault: INewData[] = [
+  {
+    "id": 104478,
+    "image": "/assets/global/es/ingame/news/ES_news_banner_adventure_38_2_small.png",
+    "title": "¡Nuevos niveles añadidos en Área 38 de Aventura Historia Dokkan!",
+    "description": "¡Los nuevos niveles 5 a 8 ya están disponibles!<br> ¡Reúne el tesoro \"Gema insólita\" para <br> intercambiar por objetos y mucho más!",
+    "date": "Comienza: 20/3/2025\n                               8:00:00 p.m.\n                               CST"
+  },
+  {
+    "id": 105876,
+    "image": "/assets/global/es/ingame/news/ES_news_banner_plain_camp_20250321_small.png",
+    "title": "Aventura Dokkan: Campaña de gran batalla del destino Parte 5",
+    "description": "¡Parte 5 de la campaña que anima mucho más el modo <br> Aventura, ya disponible! ¡Obtén un regalo con el primer <br> inicio de sesión durante el periodo del evento!",
+    "date": "Comienza: 20/3/2025\n                               8:00:00 p.m.\n                               CST"
+  },
+  {
+    "id": 105877,
+    "image": "/assets/global/es/ingame/news/ES_news_banner_adventure_29_A_small.png",
+    "title": "¡Se han añadido objetos intercambiables con Gemas insólitas!",
+    "description": "¡Las Medallas del Despertar de <br> [Final de la tragedia recurrente] Bardock supersaiyajin <br> están disponibles en el Mercado de Baba!",
+    "date": "Comienza: 20/3/2025\n                               8:00:00 p.m.\n                               CST"
+  },
+  {
+    "id": 105867,
+    "image": "/assets/global/es/ingame/news/ES_news_banner_small.png",
+    "title": "¡Información sobre próximos contenidos!",
+    "description": null,
+    "date": "Comienza: 20/3/2025\n                               2:00:00 a.m.\n                               CST"
+  },
+  {
+    "id": 102220,
+    "image": "/assets/global/es/ingame/news/ES_news_banner_event_567_small.png",
+    "title": "¡Evolución grandiosa! El saiyajin rutilante en la galaxia",
+    "description": "¡Modo Burst disponible!<br> ¡Alcanza una alta puntuación para obtener canciones!",
+    "date": "Comienza: 19/3/2025\n                               11:00:00 p.m.\n                               CST"
+  },
+  {
+    "id": 105868,
+    "image": "/assets/global/es/ingame/news/ES_news_banner_event_zbattle_172_small.png",
+    "title": "¡Lucha Z Extrema ya disponible!",
+    "description": "¡Desafía a Goku (niño)!<br> ¡Consigue la victoria en esta Lucha Z Extrema <br> para obtener Medallas del Despertar!",
+    "date": "Comienza: 19/3/2025\n                               11:00:00 p.m.\n                               CST"
   }
 ]
 
 
 export default function Home() {
-  const [loalding, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState<ICharacterCard[]>(dataDefault);
   const [banners, setBanners] = useState<IBannerData[]>(bannersDefault);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [news, setNews] = useState<INewData[]>(newsDataDefault);
 
-  const changeSlide = (newIndex: number) => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentIndex(newIndex);
-      setIsTransitioning(false);
-    }, 500); // Match this with CSS transition duration
-  };
-
-  const nextBanner = () => {
-    const newIndex = (currentIndex + 1) % banners.length;
-    changeSlide(newIndex);
-  };
-
-  const prevBanner = () => {
-    const newIndex = (currentIndex - 1 + banners.length) % banners.length;
-    changeSlide(newIndex);
-  };
 
   const getData = async () => {
     try {
@@ -381,90 +405,30 @@ export default function Home() {
   }
 
   return (
-    <section className="flex flex-col items-center justify-items-center pb-4 mt-[53px] gap-8 font-[family-name:var(--font-jost)] h-[calc(100svh-55px)] scrollbar bg-[radial-gradient(ellipse_at_bottom,rgba(83,196,255,0.5)0%,rgba(43,166,255,0)100%)]">
+    <Section>
       <div className="relative">
         <Image style={{ maskImage: "linear-gradient(black 60%, transparent)" }} src="/background.webp" width={500} height={400} alt="Fondo dragon ball personajes" />
         <Image className="absolute -bottom-[10%] left-[25%] w-[50%]" src="/logo_dokkan.webp" width={300} height={200} alt="Fondo dragon ball personajes" />
       </div>
       {/*<Button onClick={getData} loading={loalding}>Scrapear</Button>*/}
-      <h2 className="relative flex items-center justify-center gap-4 py-4 pl-4 w-full max-w-screen-xl text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] ">Cartas Recientes<span className="absolute text-white/5 text-7xl">Cartas Recientes</span></h2>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
+      <HeaderTitle title="Cartas Recientes" />
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] content-start place-items-center gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
         {cards.map(card => (
           <CardCharacter key={card.character} card={{ ...card, hasDate: false }} />
         ))}
       </div>
-      <h2 className="relative flex items-center justify-center gap-4 py-4 pl-4 w-full max-w-screen-xl text-center font-bold text-2xl border-b-[1px] border-b-[--blue-border-color] ">Banners Recientes<span className="absolute text-white/5 text-7xl">Banners Recientes</span></h2>
-      <div className="min-h-screen   text-white w-full max-w-screen-xl">
-
-        {/* Main Content */}
-        <main className="container mx-auto px-4 py-8 ">
-          {/* Banner Carousel */}
-          <div className="relative max-w-4xl mx-auto">
-            <div className="relative aspect-[16/9] rounded-lg overflow-hidden shadow-2xl">
-              <div className="absolute w-full h-full bg-[linear-gradient(0deg,#000000,transparent)] z-[2]"></div>
-              <div className="absolute w-full h-full bg-[linear-gradient(90deg,#000000,transparent_30%)] z-[2]"></div>
-              <div className="absolute w-full h-full bg-[linear-gradient(-90deg,#000000,transparent_30%)] z-[2]"></div>
-              <div className={`absolute inset-0 transition-opacity duration-500 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-                <Image
-                  src={URL_API.concat(banners[currentIndex].image)}
-                  alt={banners[currentIndex].title}
-                  width={640} height={360}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 z-[3]">
-                  <h2 className="text-3xl font-bold text-[#ffd700] mb-2">
-                    {banners[currentIndex].title}
-                  </h2>
-                  <p className="text-lg text-gray-200">
-                    {banners[currentIndex].description}
-                  </p>
-                  <p className="text-sm text-[#ff9b00] mt-2">
-                    {banners[currentIndex].startDate}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Navigation Buttons */}
-            <button
-              onClick={prevBanner}
-              disabled={isTransitioning}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm px-1 py-4 rounded-l-md hover:bg-[--orange-opacity-color] hover:text-[--orange-color] transition-colors disabled:opacity-50 z-[3]"
-            >
-              <BiLeftArrow />
-            </button>
-            <button
-              onClick={nextBanner}
-              disabled={isTransitioning}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 px-1 py-4 rounded-r-md hover:bg-[--orange-opacity-color] hover:text-[--orange-color] transition-colors disabled:opacity-50 z-[3]"
-            >
-              <BiRightArrow />
-            </button>
-          </div>
-
-          {/* Banner Indicators */}
-          <div className="flex justify-center gap-2 mt-4">
-            {banners.map((_, index) => (
-              <button
-                key={index}
-                disabled={isTransitioning}
-                onClick={() => changeSlide(index)}
-                className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? 'bg-[#ffd700]' : 'bg-gray-600'
-                  } disabled:opacity-50`}
-              />
-            ))}
-          </div>
-        </main>
-      </div>
-      {/*<div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] content-start gap-4  w-[calc(100svw-2em)]   max-w-screen-xl p-2">
-          {banners.map(banner => (
-            <a key={banner.id} href={`/banner/${banner.id}`} className="flex flex-col items-center justify-start gap-4 p-2 border border-[--orange-border-color] rounded-md hover:border-[--orange-color] bg-[--orange-opacity-color]">
-              <h3 className="flex justify-center items-center text-base font-semibold text-balance text-center bg-[--blue-background-color] px-2 py-1 w-full rounded-sm min-h-20">{banner.title}</h3>
-              <Image src={URL_API.concat(banner.image)} width={340} height={259} alt="Fondo de banner de dokkan" />
-              <p className="text-sm bg-[--blue-opacity-color] p-2">{banner.description}</p>
-            </a>
-          ))}
-        </div>*/}
-    </section>
+      <HeaderTitle title="Banners Recientes" />
+      {<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 max-w-screen-xl">
+        {banners.map(banner => (
+          <EventCard key={banner.id} banner={banner} />
+        ))}
+      </div>}
+      <HeaderTitle title="Ultimas Noticias" />
+      {<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 max-w-screen-xl">
+        {news.map(banner => (
+          <EventCard key={banner.id} banner={banner} aspect_ratio="16/8" />
+        ))}
+      </div>}
+    </Section>
   );
 }
