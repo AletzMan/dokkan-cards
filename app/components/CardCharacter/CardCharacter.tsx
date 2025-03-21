@@ -11,7 +11,7 @@ interface Props extends ICharacterCard {
 
 export function CardCharacter({ card }: { card: Props }) {
     return (
-        <Link href={`/card/${card.id}`}
+        <Link href={`/cards/${card.id}`}
             key={card.character}
             className={`${styles.card} relative grid h-max w-max gap-1 p-2 rounded-sm border hover:shadow-md 
               ${cardStyles[card.type.toLowerCase()] || "bg-slate-900"}`}
