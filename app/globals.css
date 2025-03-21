@@ -1,5 +1,5 @@
-/*@tailwind base;
-@tailwind components;*/
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 :root {
@@ -28,6 +28,10 @@
   --orange-border-color: #633c1a;
   --orange-background-color: #3e2611;
   --orange-opacity-color: #F7790830;
+  --yellow-color: #facc15;
+  --yellow-border-color: #f4d867;
+  --yellow-background-color: #806c1f;
+  --yellow-opacity-color: #facc1530;
 }
 
 @media (prefers-color-scheme: light) {
@@ -91,4 +95,26 @@ body {
 .scrollbarX::-webkit-scrollbar-corner,
 .scrollbarXY::-webkit-scrollbar-corner {
   background-color: var(--blue-border-color);
+}
+
+
+.event-card {
+  transition: all 0.3s ease-in-out;
+}
+
+.event-card:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.event-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8));
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.event-card:hover::before {
+  opacity: 1;
 }
